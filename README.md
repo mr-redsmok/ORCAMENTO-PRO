@@ -8,24 +8,6 @@
 
 Sistema completo de gestão para assistência técnica de informática. O **RED Tech** permite gerenciar ordens de serviço (OS), clientes, financeiro e gerar orçamentos/propostas para envio via WhatsApp — tudo de forma offline, direto no navegador.
 
-## Como rodar localmente
-
-### Pré-requisitos
-
-- Navegador web atualizado (Chrome, Firefox, Edge)
-- Git
-
-### 1. Clone o repositório
-
-```bash
-git clone https://github.com/mr-redsmok/ORCAMENTO-PRO
-cd ORCAMENTO-PRO-main/ORCAMENTO-PRO-main
-```
-
-### 2. Abra o projeto
-
-Para visualizar o sistema, basta abrir o arquivo `index.html` diretamente no navegador.
-
 ## Funcionalidades
 
 - **Dashboard** com métricas em tempo real (total de OS, receita, clientes)
