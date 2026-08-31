@@ -1,0 +1,61 @@
+/* ═══════════════════════════════════════════════════════════════
+   Responsive
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+    .dash-stats { grid-template-columns: repeat(2, 1fr); }
+    .dash-grid { grid-template-columns: 1fr; }
+    .editor-layout { grid-template-columns: 1fr; }
+    .finance-summary { grid-template-columns: 1fr; }
+    .settings-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        position: fixed;
+        left: 0; top: 0; bottom: 0;
+        transform: translateX(-100%);
+        z-index: 200;
+        box-shadow: var(--sh-lg);
+    }
+    .sidebar.open { transform: translateX(0); }
+    .sidebar-toggle { display: flex; }
+    .content { padding: 16px; }
+    .topbar { padding: 0 16px; }
+    .jobs-grid { grid-template-columns: 1fr; }
+    .quick-actions { grid-template-columns: 1fr; }
+    .form-row-3 { grid-template-columns: 1fr; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Print
+   ═══════════════════════════════════════════════════════════════ */
+@media print {
+    body { background: #fff; overflow: visible; }
+    .app { display: block; height: auto; }
+    .sidebar, .topbar, .sidebar-toggle { display: none !important; }
+    .main-area { display: block; overflow: visible; }
+    .content { padding: 20px; overflow: visible; }
+    .editor-layout { grid-template-columns: 1fr; }
+    .receipt { border: none; background: #fff; padding: 0; color: #000; }
+    .receipt-brand { color: #1d4ed8; }
+    .receipt-title { color: #000; }
+    .receipt-meta { color: #666; }
+    .receipt-client-block { color: #333; }
+    .receipt-client-block strong { color: #000; }
+    .receipt-table td { color: #333; border-bottom-color: #ddd; }
+    .receipt-table td:last-child { color: #000; }
+    .receipt-table th { color: #666; border-bottom-color: #ddd; }
+    .receipt-total-bar { background: #f1f5f9; border: 1px solid #ccc; }
+    .receipt-total-label { color: #1d4ed8; }
+    .receipt-total-value { color: #000; }
+    .receipt-pix { background: #f0fdf4; border-color: #16a34a; }
+    .receipt-pix-title { color: #15803d; }
+    .receipt-pix-key { color: #15803d; }
+    .receipt-actions, .btn-primary, .btn-secondary, .btn-danger,
+    .filter-bar, .page-header, .quick-actions, .dash-stats,
+    .dash-grid, .finance-summary, .chart-placeholder,
+    .clients-table-wrap, .settings-grid, .nav-item,
+    .form-section, .svc-list, .form-row-3, .custom-item-row { display: none !important; }
+    .stat-card, .form-section, .dash-panel { border: 1px solid #ddd; background: #fafafa; }
+    .clients-table-wrap { border: 1px solid #ddd; }
+}

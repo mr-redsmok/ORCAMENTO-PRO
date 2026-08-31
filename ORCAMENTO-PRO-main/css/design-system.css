@@ -1,0 +1,95 @@
+/* ═══════════════════════════════════════════════════════════════
+   RED TECH — Design System
+   Philosophy: Calm Design + Strategic Depth + Emotional Motion
+   ═══════════════════════════════════════════════════════════════ */
+:root {
+    /* Surfaces — from deepest to lightest */
+    --bg-0: #08090c;
+    --bg-1: #0e1017;
+    --bg-2: #151721;
+    --bg-3: #1c1f2e;
+    --bg-4: #242840;
+    --bg-5: #2e3350;
+    --glass: rgba(21,23,33,0.72);
+    --glass-border: rgba(255,255,255,0.06);
+
+    /* Brand */
+    --accent: #6366f1;
+    --accent-soft: rgba(99,102,241,0.12);
+    --accent-hover: #818cf8;
+    --accent-glow: rgba(99,102,241,0.25);
+
+    /* Semantic */
+    --green: #34d399;
+    --green-soft: rgba(52,211,153,0.1);
+    --red: #f87171;
+    --red-soft: rgba(248,113,113,0.1);
+    --yellow: #fbbf24;
+    --yellow-soft: rgba(251,191,36,0.1);
+    --blue: #60a5fa;
+    --blue-soft: rgba(96,165,250,0.1);
+    --purple: #a78bfa;
+    --purple-soft: rgba(167,139,250,0.1);
+    --orange: #fb923c;
+    --orange-soft: rgba(251,146,60,0.1);
+
+    /* Text */
+    --text-1: #f1f3f9;
+    --text-2: #9ba3be;
+    --text-3: #5a6180;
+    --text-4: #3a3f58;
+
+    /* Radii */
+    --r-xs: 4px;
+    --r-sm: 6px;
+    --r-md: 10px;
+    --r-lg: 14px;
+    --r-xl: 20px;
+    --r-full: 999px;
+
+    /* Shadows */
+    --sh-sm: 0 1px 3px rgba(0,0,0,0.4);
+    --sh-md: 0 4px 16px rgba(0,0,0,0.45);
+    --sh-lg: 0 12px 40px rgba(0,0,0,0.5);
+    --sh-glow: 0 0 30px var(--accent-glow);
+
+    /* Layout */
+    --sidebar-w: 240px;
+    --sidebar-w-collapsed: 64px;
+    --header-h: 56px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 14px; }
+
+body {
+    font-family: 'Inter', -apple-system, system-ui, sans-serif;
+    background: var(--bg-0);
+    color: var(--text-1);
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--bg-5); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-3); }
+
+/* ── Animations ── */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideDown { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideRight { from { opacity: 0; transform: translateX(-16px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes scaleIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+@keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.04); } }
+@keyframes glow { 0%,100% { box-shadow: var(--sh-glow); } 50% { box-shadow: 0 0 50px var(--accent-glow); } }
+@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+@keyframes countUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+.animate-in { animation: slideUp 0.35s ease-out both; }
+.animate-in-delay-1 { animation-delay: 0.05s; }
+.animate-in-delay-2 { animation-delay: 0.1s; }
+.animate-in-delay-3 { animation-delay: 0.15s; }
+.animate-in-delay-4 { animation-delay: 0.2s; }
