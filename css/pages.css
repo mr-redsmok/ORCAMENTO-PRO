@@ -553,3 +553,18 @@
         padding-right: 0;
     }
 }
+
+/* Cards de serviço: agrupamento de etiquetas no cabeçalho */
+.job-card-tags {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.job-card-footer-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}

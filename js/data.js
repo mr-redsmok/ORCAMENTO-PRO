@@ -37,6 +37,7 @@ let state = {
     jobs: [],
     clients: [],
     services: DEFAULT_SERVICES,
+    promotions: [],
     settings: {
         businessName: 'Assistência Técnica de Informática',
         ownerName: '',

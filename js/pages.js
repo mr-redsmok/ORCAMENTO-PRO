@@ -171,7 +171,10 @@ function renderJobs(el) {
                             <div class="job-card" onclick="navigateTo('jobEditor', {jobId:'${j.id}'})">
                                 <div class="job-card-header">
                                     <div class="job-card-id">${j.id}</div>
-                                    <div class="status-badge ${j.status}"><span class="status-dot ${si.color}"></span>${si.label}</div>
+                                    <div class="job-card-tags">
+                                        ${j.promotion ? `<span class="promo-badge">−${promotionLabel(j.promotion)}</span>` : ''}
+                                        <div class="status-badge ${j.status}"><span class="status-dot ${si.color}"></span>${si.label}</div>
+                                    </div>
                                 </div>
                                 <div class="job-card-client">${escHtml(j.clientName || 'Sem cliente')}</div>
                                 <div class="job-card-equip">${escHtml(j.equipment || 'Sem equipamento')}</div>
@@ -181,7 +184,10 @@ function renderJobs(el) {
                                 </div>
                                 <div class="job-card-footer">
                                     <div class="job-card-total">${formatCurrency(getJobTotal(j))}</div>
-                                    <div class="job-card-date">${formatDate(j.createdAt)}</div>
+                                    <div class="job-card-footer-right">
+                                        <button class="promo-apply-btn" onclick="event.stopPropagation(); openPromotionModal('${j.id}')" title="Aplicar promoção">${icon('percent')}</button>
+                                        <div class="job-card-date">${formatDate(j.createdAt)}</div>
+                                    </div>
                                 </div>
                             </div>
                         `;
@@ -257,19 +263,7 @@ function renderJobEditor(el) {
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Laudo Técnico</label>
-                                <div class="terminal">
-                                    <div class="terminal-bar">
-                                        <span class="terminal-dot red"></span>
-                                        <span class="terminal-dot yellow"></span>
-                                        <span class="terminal-dot green"></span>
-                                        <span class="terminal-path">~/redtech/laudo_tecnico.log</span>
-                                    </div>
-                                    <textarea class="form-textarea terminal-body" id="je_technicalReport" spellcheck="false" placeholder="$ descreva o diagnóstico..." oninput="updateJobField('${job.id}','technicalReport',this.value)">${escHtml(job.technicalReport || '')}</textarea>
-                                    <div class="terminal-status">
-                                        <span class="terminal-online">● ONLINE</span>
-                                        <span class="terminal-cursor" aria-hidden="true"></span>
-                                    </div>
-                                </div>
+                                <textarea class="form-textarea" id="je_technicalReport" placeholder="Diagnóstico, peças trocadas e observações..." oninput="updateJobField('${job.id}','technicalReport',this.value)">${escHtml(job.technicalReport || '')}</textarea>
                             </div>
                         </div>
                     </div>
@@ -355,15 +349,30 @@ function renderJobEditor(el) {
                             </tbody>
                         </table>
 
+                        ${job.promotion ? `
+                        <div class="receipt-subtotal-bar">
+                            <span class="receipt-total-label">Subtotal</span>
+                            <span class="receipt-subtotal-value">${formatCurrency(getJobSubtotal(job))}</span>
+                        </div>` : ''}
                         <div class="receipt-total-bar">
                             <span class="receipt-total-label">Total</span>
                             <span class="receipt-total-value" id="je_receiptTotal">${formatCurrency(total)}</span>
                         </div>
 
+                        ${job.promotion && job.promotion.regulation ? `
+                        <div class="receipt-terms">
+                            <div class="receipt-terms-title">Regulamento da promoção</div>
+                            <div class="receipt-terms-text">${escHtml(job.promotion.regulation)}</div>
+                        </div>` : ''}
+
                         <div class="receipt-pix ${state.settings.pixKey ? 'show' : ''}" id="je_receiptPix">
                             <div class="receipt-pix-title">${icon('wallet')} Pague com PIX</div>
                             <div class="receipt-pix-key" onclick="copyText('${escAttr(state.settings.pixKey)}')">${escHtml(state.settings.pixKey)}</div>
                         </div>
+
+                        <button class="btn-promo" onclick="openPromotionModal('${job.id}')">
+                            ${icon('percent')} ${job.promotion ? 'Promoção: ' + promotionLabel(job.promotion) : 'Aplicar promoção'}
+                        </button>
 
                         <div class="receipt-actions">
                             <button class="btn-whatsapp" onclick="shareWhatsApp('${job.id}')">
@@ -387,6 +396,10 @@ function renderReceiptItems(job) {
     (job.customItems || []).forEach(c => {
         items.push(`<tr><td>${c.qty > 1 ? c.qty + 'x ' : ''}${escHtml(c.name)}</td><td>${formatCurrency(c.price * c.qty)}</td></tr>`);
     });
+    const discount = getJobDiscount(job);
+    if (job.promotion && discount > 0) {
+        items.push(`<tr class="receipt-discount"><td>Desconto — ${escHtml(job.promotion.name)}</td><td>−${formatCurrency(discount)}</td></tr>`);
+    }
     return items.length > 0 ? items.join('') : '<tr><td colspan="2" class="receipt-empty">Nenhum item adicionado</td></tr>';
 }
 
@@ -792,6 +805,32 @@ function renderSettings(el) {
                             <button class="btn-primary btn-sm" onclick="addService()" style="height:37px;">+ Add</button>
                         </div>
                     </div>
+                </div>
+
+                <!-- Promoções -->
+                <div class="form-section">
+                    <div class="form-section-title"><div class="dot"></div> Promoções</div>
+                    <div class="promo-settings-list">
+                        ${state.promotions.length === 0 ? '<div class="promo-hint">Nenhuma promoção cadastrada.</div>' : state.promotions.map((p, i) => `
+                            <div class="promo-settings-row ${isPromotionActive(p) ? '' : 'inactive'}">
+                                <div class="psr-main">
+                                    <div class="psr-name">${escHtml(p.name)}</div>
+                                    <div class="psr-meta">
+                                        ${promotionLabel(p)}
+                                        ${p.validUntil ? ' · até ' + formatDate(p.validUntil) : ''}
+                                        · ${isPromotionActive(p) ? 'ativa' : 'inativa'}
+                                    </div>
+                                </div>
+                                <div class="psr-actions">
+                                    <button class="btn-secondary btn-sm" onclick="openPromotionSettingsModal(${i})">Editar</button>
+                                    <button class="btn-secondary btn-sm" onclick="togglePromotion(${i})">${p.active === false ? 'Ativar' : 'Desativar'}</button>
+                                    <button class="ci-delete" onclick="deletePromotion(${i})" title="Excluir promoção">✕</button>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <button class="btn-secondary" onclick="openPromotionSettingsModal()" style="width:100%;justify-content:center;margin-top:10px;">${icon('plus')} Nova Promoção</button>
+                    <div class="form-hint" style="margin-top:8px;">Promoções exigem regulamento. Ele é exibido no recibo e na mensagem do WhatsApp.</div>
                 </div>
 
                 <!-- Data Management -->

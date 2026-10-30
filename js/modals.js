@@ -226,6 +226,314 @@ function saveNewClient() {
 }
 
 // ═══════════════════════════════════════════════════════════════
+// Promoções
+// ═══════════════════════════════════════════════════════════════
+
+const PROMO_AVULSO = '__avulso__';
+
+let promoModal = { jobId: null, selected: null, type: 'percent', value: 0, regulation: '', accepted: false };
+
+function openPromotionModal(jobId) {
+    promoModal = { jobId: jobId || null, selected: null, type: 'percent', value: 0, regulation: '', accepted: false };
+    renderPromotionModal();
+}
+
+function currentPromoChoice() {
+    if (promoModal.selected === PROMO_AVULSO) {
+        return { name: 'Desconto avulso', type: promoModal.type, value: Number(promoModal.value) || 0, regulation: promoModal.regulation };
+    }
+    if (!promoModal.selected) return null;
+    return state.promotions.find(p => p.id === promoModal.selected) || null;
+}
+
+function renderPromotionModal() {
+    const job = promoModal.jobId ? state.jobs.find(j => j.id === promoModal.jobId) : null;
+    const subtotal = job ? getJobSubtotal(job) : 0;
+    const available = state.promotions.filter(isPromotionActive);
+    const current = job ? job.promotion : null;
+    const isAvulso = promoModal.selected === PROMO_AVULSO;
+    const choice = currentPromoChoice();
+    const canApply = !!choice && promoModal.accepted;
+
+    openModal(`
+        <div class="modal-title">${icon('percent')} Promoção</div>
+
+        ${subtotal > 0 ? `<div class="promo-subtotal">Subtotal da OS <strong>${formatCurrency(subtotal)}</strong></div>` : ''}
+
+        ${current ? `<div class="promo-current">Promoção aplicada: <strong>${escHtml(current.name)}</strong></div>` : ''}
+
+        <div class="promo-list">
+            ${available.map(p => `
+                <label class="promo-option ${promoModal.selected === p.id ? 'selected' : ''}">
+                    <input type="radio" name="promoPick" ${promoModal.selected === p.id ? 'checked' : ''} onchange="selectPromotion('${p.id}')">
+                    <span class="promo-opt-name">${escHtml(p.name)}</span>
+                    <span class="promo-opt-value">${promotionLabel(p)}</span>
+                </label>
+            `).join('')}
+            <label class="promo-option ${isAvulso ? 'selected' : ''}">
+                <input type="radio" name="promoPick" ${isAvulso ? 'checked' : ''} onchange="selectPromotion('${PROMO_AVULSO}')">
+                <span class="promo-opt-name">Desconto avulso</span>
+                <span class="promo-opt-value">definir agora</span>
+            </label>
+        </div>
+
+        ${available.length === 0 ? '<div class="promo-hint">Nenhuma promoção cadastrada ou válida. Use o desconto avulso, ou cadastre promoções em Configurações.</div>' : ''}
+
+        <div class="promo-detail">
+            ${isAvulso ? `
+                <div class="form-row-3">
+                    <div class="form-group" style="margin-bottom:0;">
+                        <label class="form-label">Tipo</label>
+                        <select class="form-select" onchange="setPromoType(this.value)">
+                            <option value="percent" ${promoModal.type === 'percent' ? 'selected' : ''}>Percentual (%)</option>
+                            <option value="fixed" ${promoModal.type === 'fixed' ? 'selected' : ''}>Valor fixo (R$)</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="margin-bottom:0;">
+                        <label class="form-label">Valor</label>
+                        <input class="form-input" id="promoValueInput" type="number" min="0" step="0.01" value="${promoModal.value || ''}" oninput="setPromoValue(this.value)">
+                    </div>
+                </div>
+                <div class="form-group" style="margin-top:12px;">
+                    <label class="form-label">Regulamento <span class="req">*</span></label>
+                    <textarea class="form-textarea" id="promoRegulationInput" placeholder="Regras da promoção..." oninput="setPromoRegulation(this.value)">${escHtml(promoModal.regulation)}</textarea>
+                </div>
+            ` : choice ? `
+                <div class="promo-regulation">
+                    <div class="promo-reg-title">Regulamento</div>
+                    <div class="promo-reg-text">${escHtml(choice.regulation || 'Sem regulamento cadastrado para esta promoção.')}</div>
+                </div>
+            ` : '<div class="promo-hint">Selecione uma promoção para ver o regulamento.</div>'}
+        </div>
+
+        <div class="promo-preview" id="promoPreview"></div>
+
+        <label class="promo-accept">
+            <input type="checkbox" id="promoAccept" ${promoModal.accepted ? 'checked' : ''} onchange="togglePromoAccept()">
+            <span>Li e concordo com o regulamento</span>
+        </label>
+
+        <div class="modal-actions">
+            ${current ? '<button class="btn-danger" onclick="removePromotion()">Remover</button>' : ''}
+            <button class="btn-secondary" onclick="closeModal()">Cancelar</button>
+            <button class="btn-primary" id="promoApplyBtn" onclick="applyPromotion()" ${canApply ? '' : 'disabled'}>Aplicar</button>
+        </div>
+    `);
+
+    updatePromoPreview();
+}
+
+function selectPromotion(id) {
+    promoModal.selected = id;
+    promoModal.accepted = false;
+    if (id === PROMO_AVULSO) {
+        promoModal.type = 'percent';
+        promoModal.value = 0;
+        promoModal.regulation = '';
+    }
+    renderPromotionModal();
+}
+
+function setPromoType(type) {
+    promoModal.type = type;
+    updatePromoPreview();
+    updatePromoApplyBtn();
+}
+
+function setPromoValue(value) {
+    promoModal.value = Number(value) || 0;
+    updatePromoPreview();
+    updatePromoApplyBtn();
+}
+
+function setPromoRegulation(text) {
+    promoModal.regulation = text;
+    updatePromoApplyBtn();
+}
+
+function togglePromoAccept() {
+    promoModal.accepted = document.getElementById('promoAccept')?.checked || false;
+    updatePromoApplyBtn();
+}
+
+function updatePromoApplyBtn() {
+    const btn = document.getElementById('promoApplyBtn');
+    if (!btn) return;
+    const choice = currentPromoChoice();
+    btn.disabled = !!(promoModal.accepted && (!choice || (choice.type === 'percent' && !choice.value)));
+}
+
+function updatePromoPreview() {
+    const el = document.getElementById('promoPreview');
+    if (!el) return;
+    const job = promoModal.jobId ? state.jobs.find(j => j.id === promoModal.jobId) : null;
+    const subtotal = job ? getJobSubtotal(job) : 0;
+    const choice = currentPromoChoice();
+    const discount = getPromotionDiscount(subtotal, choice);
+    if (!choice || discount <= 0) {
+        el.innerHTML = '';
+        return;
+    }
+    el.innerHTML = `Desconto <strong>−${formatCurrency(discount)}</strong> · Total <strong>${formatCurrency(Math.max(0, subtotal - discount))}</strong>`;
+}
+
+function applyPromotion() {
+    const job = promoModal.jobId ? state.jobs.find(j => j.id === promoModal.jobId) : null;
+    if (!job) {
+        toast('⚠️ OS não encontrada', 'error');
+        return;
+    }
+    if (!promoModal.accepted) {
+        toast('⚠️ Aceite o regulamento para aplicar a promoção', 'error');
+        return;
+    }
+
+    const choice = currentPromoChoice();
+    if (!choice) {
+        toast('⚠️ Selecione uma promoção', 'error');
+        return;
+    }
+    if (!choice.value || choice.value <= 0) {
+        toast('⚠️ Informe o valor do desconto', 'error');
+        return;
+    }
+    if (!choice.regulation || !choice.regulation.trim()) {
+        toast('⚠️ A promoção precisa de regulamento', 'error');
+        return;
+    }
+
+    job.promotion = {
+        id: choice.id || null,
+        name: choice.name,
+        type: choice.type,
+        value: Number(choice.value),
+        regulation: choice.regulation.trim(),
+        appliedAt: new Date().toISOString(),
+    };
+    job.updatedAt = new Date().toISOString();
+    saveState();
+    closeModal();
+    refreshCurrentPage();
+    toast('✅ Promoção aplicada: ' + job.promotion.name);
+}
+
+function removePromotion() {
+    const job = promoModal.jobId ? state.jobs.find(j => j.id === promoModal.jobId) : null;
+    if (!job) return;
+    delete job.promotion;
+    job.updatedAt = new Date().toISOString();
+    saveState();
+    closeModal();
+    refreshCurrentPage();
+    toast('Promoção removida');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Cadastro de promoções (Configurações)
+// ═══════════════════════════════════════════════════════════════
+
+let promoFormIndex = null;
+
+function openPromotionSettingsModal(index) {
+    promoFormIndex = (index === undefined || index === null) ? null : index;
+    const p = promoFormIndex !== null ? state.promotions[promoFormIndex] : null;
+
+    openModal(`
+        <div class="modal-title">${icon('tag')} ${p ? 'Editar Promoção' : 'Nova Promoção'}</div>
+
+        <div class="form-group">
+            <label class="form-label">Nome da promoção <span class="req">*</span></label>
+            <input class="form-input" id="pf_name" value="${escAttr(p ? p.name : '')}" placeholder="Ex: Promoção Pixels">
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label">Tipo de desconto</label>
+                <select class="form-select" id="pf_type">
+                    <option value="percent" ${p && p.type === 'fixed' ? '' : 'selected'}>Percentual (%)</option>
+                    <option value="fixed" ${p && p.type === 'fixed' ? 'selected' : ''}>Valor fixo (R$)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Valor <span class="req">*</span></label>
+                <input class="form-input" id="pf_value" type="number" min="0" step="0.01" value="${p ? p.value : ''}" placeholder="10">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Válido até</label>
+            <input class="form-input" id="pf_validUntil" type="date" value="${p && p.validUntil ? p.validUntil : ''}">
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Regulamento <span class="req">*</span></label>
+            <textarea class="form-textarea" id="pf_regulation" placeholder="Regras da promoção...">${escHtml(p ? p.regulation : '')}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label class="promo-accept" style="margin:0;">
+                <input type="checkbox" id="pf_active" ${!p || p.active !== false ? 'checked' : ''}>
+                <span>Promoção ativa</span>
+            </label>
+        </div>
+
+        <div class="modal-actions">
+            <button class="btn-secondary" onclick="closeModal()">Cancelar</button>
+            <button class="btn-primary" onclick="savePromotion()">${icon('save')} Salvar</button>
+        </div>
+    `);
+    setTimeout(() => document.getElementById('pf_name')?.focus(), 100);
+}
+
+function savePromotion() {
+    const name = (document.getElementById('pf_name')?.value || '').trim();
+    const type = document.getElementById('pf_type')?.value || 'percent';
+    const value = Number(document.getElementById('pf_value')?.value) || 0;
+    const validUntil = document.getElementById('pf_validUntil')?.value || '';
+    const regulation = (document.getElementById('pf_regulation')?.value || '').trim();
+    const active = document.getElementById('pf_active')?.checked !== false;
+
+    if (!name) { toast('⚠️ Informe o nome da promoção', 'error'); return; }
+    if (value <= 0) { toast('⚠️ Informe o valor do desconto', 'error'); return; }
+    if (!regulation) { toast('⚠️ Escreva o regulamento da promoção', 'error'); return; }
+
+    const promo = { id: promoFormIndex !== null && state.promotions[promoFormIndex] ? state.promotions[promoFormIndex].id : genPromoId(), name, type, value, validUntil, regulation, active };
+
+    if (promoFormIndex !== null && state.promotions[promoFormIndex]) {
+        state.promotions[promoFormIndex] = promo;
+    } else {
+        state.promotions.push(promo);
+    }
+
+    saveState();
+    closeModal();
+    renderSettings(document.getElementById('contentArea'));
+    toast('✅ Promoção "' + name + '" salva');
+}
+
+function togglePromotion(index) {
+    const p = state.promotions[index];
+    if (!p) return;
+    p.active = p.active === false;
+    saveState();
+    renderSettings(document.getElementById('contentArea'));
+}
+
+function deletePromotion(index) {
+    const p = state.promotions[index];
+    if (!p) return;
+    if (!confirm('Excluir a promoção "' + p.name + '"?')) return;
+    state.promotions.splice(index, 1);
+    saveState();
+    renderSettings(document.getElementById('contentArea'));
+    toast('Promoção excluída');
+}
+
+function genPromoId() {
+    return 'p' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+}
+
+// ═══════════════════════════════════════════════════════════════
 // WhatsApp Sharing
 // ═══════════════════════════════════════════════════════════════
 
@@ -261,11 +569,20 @@ function shareWhatsApp(jobId) {
     });
 
     msg += `\n━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+    const discount = getJobDiscount(job);
+    if (job.promotion && discount > 0) {
+        msg += `*🎁 PROMOÇÃO:* ${job.promotion.name} (−${formatCurrency(discount)})\n`;
+    }
     msg += `*💰 TOTAL: ${formatCurrency(getJobTotal(job))}*\n`;
     msg += `━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
 
     if (state.settings.pixKey) {
         msg += `\n*🟢 PIX:* ${state.settings.pixKey}\n\n`;
+    }
+
+    if (job.promotion && job.promotion.regulation) {
+        msg += `\n*📜 REGULAMENTO DA PROMOÇÃO:*\n`;
+        msg += `_${job.promotion.regulation}_\n\n`;
     }
 
     msg += `Obrigado pela confiança! 🤝`;

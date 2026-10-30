@@ -30,7 +30,7 @@
    Print
    ═══════════════════════════════════════════════════════════════ */
 @media print {
-    body { background: #fff; overflow: visible; }
+    body { background: #fff; overflow: visible; color: #000; }
     .app { display: block; height: auto; }
     .sidebar, .topbar, .sidebar-toggle { display: none !important; }
     .main-area { display: block; overflow: visible; }
@@ -43,19 +43,31 @@
     .receipt-client-block { color: #333; }
     .receipt-client-block strong { color: #000; }
     .receipt-table td { color: #333; border-bottom-color: #ddd; }
+    .receipt-table td:first-child { color: #000; }
     .receipt-table td:last-child { color: #000; }
     .receipt-table th { color: #666; border-bottom-color: #ddd; }
     .receipt-total-bar { background: #f1f5f9; border: 1px solid #ccc; }
     .receipt-total-label { color: #1d4ed8; }
     .receipt-total-value { color: #000; }
+    .receipt-subtotal-bar { border-bottom: 1px solid #ddd; }
+    .receipt-subtotal-value { color: #333; }
+    .receipt-discount td, .receipt-discount td:last-child { color: #15803d !important; }
+    .receipt-terms { border: 1px solid #ddd; background: #fafafa; margin-top: 12px; }
+    .receipt-terms-title { color: #666; }
+    .receipt-terms-text { color: #333; }
     .receipt-pix { background: #f0fdf4; border-color: #16a34a; }
     .receipt-pix-title { color: #15803d; }
     .receipt-pix-key { color: #15803d; }
-    .receipt-actions, .btn-primary, .btn-secondary, .btn-danger,
+    .receipt-actions, .btn-promo, .btn-primary, .btn-secondary, .btn-danger,
     .filter-bar, .page-header, .quick-actions, .dash-stats,
     .dash-grid, .finance-summary, .chart-placeholder,
     .clients-table-wrap, .settings-grid, .nav-item,
     .form-section, .svc-list, .form-row-3, .custom-item-row { display: none !important; }
     .stat-card, .form-section, .dash-panel { border: 1px solid #ddd; background: #fafafa; }
+    .stat-value, .job-card-client, .job-card-id { color: #000; }
+    .stat-label, .job-card-equip, .job-card-date { color: #666; }
+    .service-tag { background: #eee !important; color: #333 !important; }
+    .job-card { border: 1px solid #ddd; background: #fafafa; }
+    .job-card-total { color: #000; }
     .clients-table-wrap { border: 1px solid #ddd; }
 }

@@ -45,6 +45,19 @@ function toggleSidebar() {
     document.getElementById('sidebar').classList.toggle('open');
 }
 
+// Redesenha a página atual sem mexer na navegação
+function refreshCurrentPage() {
+    const content = document.getElementById('contentArea');
+    switch(currentPage) {
+        case 'dashboard':  renderDashboard(content); break;
+        case 'jobs':       renderJobs(content); break;
+        case 'jobEditor':  renderJobEditor(content); break;
+        case 'clients':    renderClients(content); break;
+        case 'finance':    renderFinance(content); break;
+        case 'settings':   renderSettings(content); break;
+    }
+}
+
 function updateNavBadges() {
     document.getElementById('navJobCount').textContent = state.jobs.length;
     document.getElementById('navClientCount').textContent = state.clients.length;

@@ -23,11 +23,45 @@ function formatDateTime(d) {
 }
 
 // ── Job Helpers ──
-function getJobTotal(job) {
+function getJobSubtotal(job) {
     let total = 0;
     (job.services || []).forEach(s => { total += s.price * s.qty; });
     (job.customItems || []).forEach(c => { total += c.price * c.qty; });
     return total;
+}
+
+// Desconto de uma promoção: percentual sobre o subtotal ou valor fixo (limitado ao subtotal)
+function getPromotionDiscount(subtotal, promo) {
+    if (!promo) return 0;
+    const value = Number(promo.value) || 0;
+    if (value <= 0 || !subtotal) return 0;
+    if (promo.type === 'fixed') return Math.min(value, subtotal);
+    return subtotal * value / 100;
+}
+
+function getJobDiscount(job) {
+    if (!job || !job.promotion) return 0;
+    return getPromotionDiscount(getJobSubtotal(job), job.promotion);
+}
+
+function getJobTotal(job) {
+    return Math.max(0, getJobSubtotal(job) - getJobDiscount(job));
+}
+
+// Promoção só é oferecida se estiver ativa e dentro da validade
+function isPromotionActive(promo) {
+    if (!promo) return false;
+    if (promo.active === false) return false;
+    if (promo.validUntil) {
+        const end = new Date(promo.validUntil + 'T23:59:59');
+        if (!isNaN(end.getTime()) && end.getTime() < Date.now()) return false;
+    }
+    return true;
+}
+
+function promotionLabel(promo) {
+    if (!promo) return '';
+    return promo.type === 'fixed' ? formatCurrency(promo.value) : promo.value + '%';
 }
 
 function getStatusInfo(value) {
@@ -74,6 +108,8 @@ const ICON_PATHS = {
     'printer': '<polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/>',
     'trash': '<polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>',
     'alert-triangle': '<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>',
+    'percent': '<line x1="19" y1="5" x2="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/>',
+    'tag': '<path d="M20.59 13.41 13 21l-9-9V3h9l9 9z"/><circle cx="7.5" cy="7.5" r="1.5"/>',
 };
 
 function icon(name) {
