@@ -3,35 +3,34 @@
 Fonte da verdade visual. Os tokens reais estão em `css/design-system.css`.
 
 ## Estilo
-- **Direção:** Cyberpunk UI — fundo escuro, ciano e magenta neon, estética de HUD/terminal.
-- **Scanlines:** overlay sutil de linhas de CRT sobre toda a interface (`body::after`).
-- **Cores de fundo:** gradientes radiais em ciano, magenta e roxo sobre `#07080F`.
-- **Acessibilidade:** `prefers-reduced-motion` remove as animações e o overlay de scanlines; `prefers-reduced-transparency` torna o vidro opaco.
+- **Direção:** All black — preto puro, monocromático, sem brilho.
+- **Objetivo:** uso diário confortável. Nada de neon, glow, scanlines ou glitch.
+- **Semântica mínima:** só as cores de status mantêm matiz, e desaturadas, porque precisam distinguir estados.
+- **Acessibilidade:** `prefers-reduced-motion` e `prefers-reduced-transparency` são respeitados.
 
 ## Cores
 | Papel | Valor | Token |
 |---|---|---|
-| Fundo | `#07080F` | `--bg-0` |
-| Superfície (cards) | `#11141F` | `--bg-2` |
-| Ciano neon (principal) | `#00F0FF` | `--accent` |
-| Magenta neon | `#FF2A6D` | `--accent-2` |
-| Verde neon (sucesso) | `#05FFA1` | `--green` |
-| Amarelo neon | `#FCEE0A` | `--yellow` |
-| Texto principal | `#E9F7FF` | `--text-1` |
-| Divisória | `rgba(0,240,255,0.12)` | `--hairline` |
+| Fundo | `#000000` | `--bg-0` |
+| Superfície (cards) | `#0B0B0B` | `--bg-2` |
+| Divisória | `rgba(255,255,255,0.10)` | `--hairline` |
+| Principal (ações) | `#FFFFFF` | `--accent` |
+| Texto principal | `#F2F2F2` | `--text-1` |
+| Texto secundário | `#858585` | `--text-3` |
 
-Sobre ciano e magenta, o texto é **escuro** (`#05070D`), nunca branco.
+Sobre branco, o texto é sempre `#000`.
 
 ## Tipografia
-- **Títulos, números e rótulos:** `var(--display)` — monoespaçada, caixa alta, com tracking largo.
+- **Títulos, números e rótulos:** `var(--display)` — monoespaçada, caixa alta, tracking largo.
 - **Texto corrido:** pilha do sistema.
 
-## Forma
-- Raios pequenos e retos: 3px (xs), 4px (sm), 6px (md), 8px (lg).
-- Cards de estatística e painéis têm canto chanfrado via `clip-path`.
-- Brilho neon no lugar de sombra: `0 0 18px rgba(0,240,255,0.35)`.
+## Forma e profundidade
+- Raios retos: 3px, 4px, 6px, 8px.
+- Sombras só para profundidade (`rgba(0,0,0,...)`), nunca como brilho.
+- Cards de estatística e painéis mantêm o canto chanfrado via `clip-path`.
 
 ## Regras
 - Ícones são SVG (`icon()` em `js/helpers.js`), nunca emojis.
-- Status é indicado por ponto colorido (`.status-dot`), com cor e texto — nunca só cor.
-- Vidro translúcido apenas na navegação (barra lateral e barra superior).
+- Status é indicado por ponto colorido (`.status-dot`) com cor **e** rótulo textual.
+- A lista de Serviços rola dentro de `.jobs-grid`, com barra de rolagem própria e visível.
+- Em telas de até 768px, a lista volta a rolar com a página.

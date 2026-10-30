@@ -1,46 +1,46 @@
 /* ═══════════════════════════════════════════════════════════════
    RED TECH — Design System
-   Style: Cyberpunk UI · dark HUD · neon cyan / magenta
+   Style: All Black · monochrome · no glow
    Type: monospace for titles and figures · system UI for body
    ═══════════════════════════════════════════════════════════════ */
 :root {
     /* Surfaces */
-    --bg-0: #07080F;
-    --bg-1: #0C0E18;
-    --bg-2: #11141F;
-    --bg-3: #171B2A;
-    --bg-4: #1F2438;
-    --bg-5: #2B3350;
-    --glass: rgba(12,14,24,0.62);
-    --glass-border: rgba(0,240,255,0.16);
-    --hairline: rgba(0,240,255,0.12);
+    --bg-0: #000000;
+    --bg-1: #050505;
+    --bg-2: #0B0B0B;
+    --bg-3: #141414;
+    --bg-4: #1E1E1E;
+    --bg-5: #2B2B2B;
+    --glass: rgba(8,8,8,0.78);
+    --glass-border: rgba(255,255,255,0.09);
+    --hairline: rgba(255,255,255,0.10);
 
-    /* Brand */
-    --accent: #00F0FF;
-    --accent-soft: rgba(0,240,255,0.10);
-    --accent-hover: #5CF7FF;
-    --accent-glow: rgba(0,240,255,0.35);
-    --accent-2: #FF2A6D;
+    /* Brand — monochrome */
+    --accent: #FFFFFF;
+    --accent-soft: rgba(255,255,255,0.08);
+    --accent-hover: #E4E4E4;
+    --accent-glow: transparent;
+    --accent-2: #BFBFBF;
 
-    /* Semantic */
-    --green: #05FFA1;
-    --green-soft: rgba(5,255,161,0.12);
-    --red: #FF2A6D;
-    --red-soft: rgba(255,42,109,0.14);
-    --yellow: #FCEE0A;
-    --yellow-soft: rgba(252,238,10,0.12);
-    --blue: #4D9DFF;
-    --blue-soft: rgba(77,157,255,0.14);
-    --purple: #B467FF;
-    --purple-soft: rgba(180,103,255,0.14);
-    --orange: #FF8A00;
-    --orange-soft: rgba(255,138,0,0.14);
+    /* Semantic — desaturated, no bloom */
+    --green: #4FB783;
+    --green-soft: rgba(79,183,131,0.14);
+    --red: #D1584F;
+    --red-soft: rgba(209,88,79,0.14);
+    --yellow: #C9A227;
+    --yellow-soft: rgba(201,162,39,0.14);
+    --blue: #5B93C7;
+    --blue-soft: rgba(91,147,199,0.14);
+    --purple: #9B7BB8;
+    --purple-soft: rgba(155,123,184,0.14);
+    --orange: #CE7A45;
+    --orange-soft: rgba(206,122,69,0.14);
 
     /* Text */
-    --text-1: #E9F7FF;
-    --text-2: #A9B8D0;
-    --text-3: #8592AE;
-    --text-4: #5C6A85;
+    --text-1: #F2F2F2;
+    --text-2: #B0B0B0;
+    --text-3: #858585;
+    --text-4: #5E5E5E;
 
     /* Radii */
     --r-xs: 3px;
@@ -50,11 +50,11 @@
     --r-xl: 10px;
     --r-full: 980px;
 
-    /* Shadows / glow */
-    --sh-sm: 0 0 0 1px rgba(0,240,255,0.06);
-    --sh-md: 0 0 18px rgba(0,240,255,0.10);
-    --sh-lg: 0 0 40px rgba(255,42,109,0.14);
-    --sh-glow: 0 0 0 1px var(--accent), 0 0 18px var(--accent-glow);
+    /* Shadows — depth only, no glow */
+    --sh-sm: 0 1px 2px rgba(0,0,0,0.5);
+    --sh-md: 0 4px 14px rgba(0,0,0,0.6);
+    --sh-lg: 0 16px 48px rgba(0,0,0,0.75);
+    --sh-glow: none;
 
     /* Layout */
     --sidebar-w: 248px;
@@ -69,11 +69,7 @@ html { font-size: 14px; }
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-    background:
-        radial-gradient(60% 50% at 8% 6%, rgba(0,240,255,0.14) 0%, transparent 70%),
-        radial-gradient(50% 45% at 95% 12%, rgba(255,42,109,0.16) 0%, transparent 70%),
-        radial-gradient(55% 55% at 60% 110%, rgba(180,103,255,0.14) 0%, transparent 70%),
-        var(--bg-0);
+    background: var(--bg-0);
     color: var(--text-1);
     min-height: 100vh;
     overflow: hidden;
@@ -99,22 +95,11 @@ body {
     outline-offset: 2px;
 }
 
-/* Scanlines: a faint CRT overlay across the whole interface */
-body::after {
-    content: '';
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    background: repeating-linear-gradient(0deg, rgba(0,0,0,0.18) 0px, rgba(0,0,0,0.18) 1px, transparent 1px, transparent 3px);
-    z-index: 9999;
-    opacity: 0.35;
-}
-
 /* ── Scrollbar ── */
-::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--bg-5); border-radius: 4px; border: 2px solid transparent; background-clip: content-box; }
-::-webkit-scrollbar-thumb:hover { background: var(--accent); background-clip: content-box; }
+::-webkit-scrollbar-thumb { background: var(--bg-5); border-radius: 6px; border: 2px solid #000; background-clip: content-box; }
+::-webkit-scrollbar-thumb:hover { background: #3D3D3D; background-clip: content-box; }
 
 /* ── Animations ── */
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -123,7 +108,6 @@ body::after {
 @keyframes slideRight { from { opacity: 0; transform: translateX(-12px); } to { opacity: 1; transform: translateX(0); } }
 @keyframes scaleIn { from { opacity: 0; transform: scale(0.97); } to { opacity: 1; transform: scale(1); } }
 @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.03); } }
-@keyframes glow { 0%,100% { box-shadow: var(--sh-glow); } 50% { box-shadow: 0 0 0 6px var(--accent-glow); } }
 @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
 @keyframes countUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -133,12 +117,10 @@ body::after {
 .animate-in-delay-3 { animation-delay: 0.12s; }
 .animate-in-delay-4 { animation-delay: 0.16s; }
 
-/* Glass fallback: opaque chrome when the user limits transparency */
 @media (prefers-reduced-transparency: reduce) {
-    :root { --glass: #0C0E18; }
+    :root { --glass: #080808; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    body::after { display: none; }
     *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
 }
