@@ -11,7 +11,7 @@
     --bg-3: #F2F2F4;
     --bg-4: #E5E5EA;
     --bg-5: #D1D1D6;
-    --glass: rgba(255,255,255,0.72);
+    --glass: rgba(255,255,255,0.58);
     --glass-border: rgba(0,0,0,0.08);
     --hairline: rgba(0,0,0,0.08);
 
@@ -67,7 +67,11 @@ html { font-size: 14px; }
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-    background: var(--bg-0);
+    background:
+        radial-gradient(60% 50% at 8% 6%, #BFD9FF 0%, transparent 70%),
+        radial-gradient(50% 45% at 95% 12%, #FFD6C2 0%, transparent 70%),
+        radial-gradient(55% 55% at 60% 110%, #DCCBFF 0%, transparent 70%),
+        #EDEFF4;
     color: var(--text-1);
     min-height: 100vh;
     overflow: hidden;
