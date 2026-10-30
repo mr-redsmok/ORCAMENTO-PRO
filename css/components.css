@@ -5,9 +5,9 @@
     background: var(--accent);
     color: #fff;
     border: none;
-    padding: 9px 18px;
-    border-radius: var(--r-sm);
-    font-weight: 600;
+    padding: 8px 18px;
+    border-radius: var(--r-full);
+    font-weight: 500;
     font-size: 13px;
     font-family: inherit;
     cursor: pointer;
