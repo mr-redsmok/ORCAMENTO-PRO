@@ -9,7 +9,7 @@
 }
 
 .stat-card {
-    background: linear-gradient(160deg, rgba(17,20,31,0.95), rgba(12,14,24,0.95));
+    background: linear-gradient(160deg, #0E0E0E, #0A0A0A);
     border: 1px solid var(--hairline);
     border-radius: var(--r-lg);
     padding: 20px 22px;
@@ -33,10 +33,14 @@
     margin-bottom: 16px;
 }
 
-.stat-icon.green { background: var(--green-soft); }
-.stat-icon.blue { background: var(--blue-soft); }
-.stat-icon.purple { background: var(--purple-soft); }
-.stat-icon.orange { background: var(--orange-soft); }
+/* Sem cor: o próprio ícone identifica cada métrica */
+.stat-icon.green,
+.stat-icon.blue,
+.stat-icon.purple,
+.stat-icon.orange {
+    background: rgba(255,255,255,0.06);
+    color: var(--text-2);
+}
 
 .stat-value {
     font-family: var(--display);
@@ -78,7 +82,7 @@
 }
 
 .dash-panel {
-    background: linear-gradient(160deg, rgba(17,20,31,0.95), rgba(12,14,24,0.95));
+    background: linear-gradient(160deg, #0E0E0E, #0A0A0A);
     border: 1px solid var(--hairline);
     border-radius: var(--r-lg);
     box-shadow: var(--sh-sm);
@@ -271,13 +275,18 @@
     scrollbar-gutter: stable;
 }
 
-.jobs-grid::-webkit-scrollbar { width: 12px; }
-.jobs-grid::-webkit-scrollbar-track { background: rgba(255,255,255,0.04); border-radius: 8px; border: 1px solid var(--hairline); }
-.jobs-grid::-webkit-scrollbar-thumb { background: #333; border-radius: 8px; border: 2px solid #000; background-clip: content-box; }
-.jobs-grid::-webkit-scrollbar-thumb:hover { background: #4D4D4D; background-clip: content-box; }
+.jobs-grid {
+    scrollbar-width: auto;
+    scrollbar-color: #4A4A4A rgba(255,255,255,0.06);
+}
+
+.jobs-grid::-webkit-scrollbar { width: 14px; }
+.jobs-grid::-webkit-scrollbar-track { background: rgba(255,255,255,0.06); border-radius: 8px; border: 1px solid var(--hairline); }
+.jobs-grid::-webkit-scrollbar-thumb { background: #4A4A4A; border-radius: 8px; border: 3px solid #000; background-clip: content-box; }
+.jobs-grid::-webkit-scrollbar-thumb:hover { background: #666; background-clip: content-box; }
 
 .job-card {
-    background: linear-gradient(160deg, rgba(17,20,31,0.95), rgba(12,14,24,0.95));
+    background: linear-gradient(160deg, #0E0E0E, #0A0A0A);
     border: 1px solid var(--hairline);
     border-radius: var(--r-lg);
     padding: 20px;

@@ -149,6 +149,25 @@
     align-items: start;
 }
 
+/* No desktop, o formulário rola sozinho e o recibo fica à vista */
+@media (min-width: 1025px) {
+    .editor-layout > div:first-child {
+        max-height: calc(100vh - 170px);
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        padding-right: 14px;
+        scrollbar-width: auto;
+        scrollbar-color: #4A4A4A rgba(255,255,255,0.06);
+    }
+
+    .editor-layout > div:first-child::-webkit-scrollbar { width: 14px; }
+    .editor-layout > div:first-child::-webkit-scrollbar-track { background: rgba(255,255,255,0.06); border-radius: 8px; border: 1px solid var(--hairline); }
+    .editor-layout > div:first-child::-webkit-scrollbar-thumb { background: #4A4A4A; border-radius: 8px; border: 3px solid #000; background-clip: content-box; }
+    .editor-layout > div:first-child::-webkit-scrollbar-thumb:hover { background: #666; background-clip: content-box; }
+
+    .editor-layout > div:last-child { position: sticky; top: 0; }
+}
+
 /* ── Service Checkbox List ── */
 .svc-list { display: flex; flex-direction: column; gap: 4px; }
 
@@ -338,7 +357,7 @@
     align-items: center;
     padding: 12px 14px;
     background: var(--accent-soft);
-    border: 1px solid rgba(37,99,235,0.2);
+    border: 1px solid var(--hairline);
     border-radius: var(--r-md);
 }
 
@@ -399,11 +418,11 @@
 .btn-whatsapp {
     flex: 1;
     padding: 10px;
-    background: #128C7E;
-    color: #fff;
-    border: none;
+    background: rgba(79,183,131,0.10);
+    color: var(--green);
+    border: 1px solid rgba(79,183,131,0.30);
     border-radius: var(--r-sm);
-    font-weight: 700;
+    font-weight: 600;
     font-size: 12px;
     font-family: inherit;
     cursor: pointer;
@@ -414,7 +433,11 @@
     transition: all 0.2s;
 }
 
-.btn-whatsapp:hover { filter: brightness(1.1); transform: translateY(-1px); box-shadow: var(--sh-md); }
+.btn-whatsapp:hover {
+    background: var(--green);
+    color: #05200F;
+    border-color: var(--green);
+}
 
 .btn-print {
     padding: 10px 14px;
