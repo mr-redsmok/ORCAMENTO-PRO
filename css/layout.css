@@ -6,7 +6,9 @@
 /* ── Sidebar ── */
 .sidebar {
     width: var(--sidebar-w);
-    background: var(--bg-1);
+    background: var(--glass);
+    -webkit-backdrop-filter: saturate(180%) blur(24px);
+    backdrop-filter: saturate(180%) blur(24px);
     border-right: 1px solid var(--glass-border);
     display: flex;
     flex-direction: column;
@@ -123,7 +125,7 @@
     font-weight: 700;
     padding: 2px 7px;
     border-radius: var(--r-full);
-    font-family: 'Fira Code', monospace;
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
 }
 
 .nav-item.active .nav-badge { background: var(--accent); color: #fff; }
@@ -150,7 +152,7 @@
     border: 1px solid var(--bg-5);
     border-radius: var(--r-xs);
     padding: 1px 5px;
-    font-family: 'Fira Code', monospace;
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
     font-size: 10px;
     color: var(--text-2);
 }
@@ -173,7 +175,9 @@
     gap: 12px;
     border-bottom: 1px solid var(--glass-border);
     flex-shrink: 0;
-    background: var(--bg-1);
+    background: var(--glass);
+    -webkit-backdrop-filter: saturate(180%) blur(24px);
+    backdrop-filter: saturate(180%) blur(24px);
 }
 
 .topbar-title {
@@ -207,7 +211,7 @@
     border: 1px solid var(--bg-5);
     border-radius: var(--r-xs);
     padding: 1px 6px;
-    font-family: 'Fira Code', monospace;
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
     font-size: 10px;
     color: var(--text-3);
 }

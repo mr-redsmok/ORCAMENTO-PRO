@@ -577,7 +577,7 @@ function renderClients(el) {
                                         <td>${escHtml(c.phone || '—')}</td>
                                         <td>${escHtml(c.email || '—')}</td>
                                         <td><span class="client-jobs-count">${clientJobs.length}</span></td>
-                                        <td style="font-family:'Fira Code',monospace;color:var(--green);font-weight:700;">${formatCurrency(totalSpent)}</td>
+                                        <td style="font-family:ui-monospace,'SF Mono',Menlo,monospace;color:var(--green);font-weight:700;">${formatCurrency(totalSpent)}</td>
                                         <td>${formatDate(c.createdAt)}</td>
                                         <td><button class="ci-delete" onclick="deleteClient('${c.id}')" title="Apagar cliente">✕</button></td>
                                     </tr>
@@ -696,7 +696,7 @@ function renderFinance(el) {
                                             <div style="height:100%;width:${pct}%;background:var(--accent);border-radius:2px;transition:width 0.5s;"></div>
                                         </div>
                                     </div>
-                                    <span style="font-size:11px;font-family:'Fira Code',monospace;color:var(--text-3);font-weight:700;">${count}x</span>
+                                    <span style="font-size:11px;font-family:ui-monospace,'SF Mono',Menlo,monospace;color:var(--text-3);font-weight:700;">${count}x</span>
                                 </div>
                             `;
                         }).join('')}

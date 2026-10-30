@@ -99,7 +99,7 @@
     border: 1px solid var(--bg-5);
     border-radius: 3px;
     padding: 1px 5px;
-    font-family: 'Fira Code', monospace;
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
     font-size: 9px;
 }
 

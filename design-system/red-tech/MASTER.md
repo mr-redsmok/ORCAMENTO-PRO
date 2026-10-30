@@ -1,215 +1,35 @@
-# Design System Master File
+# RED Tech — Design System (MASTER)
 
-> **LOGIC:** When building a specific page, first check `design-system/pages/[page-name].md`.
-> If that file exists, its rules **override** this Master file.
-> If not, strictly follow the rules below.
+Fonte da verdade visual. Os tokens reais estão em `css/design-system.css`.
 
----
+## Estilo
+- **Direção:** Apple-inspired, minimalista, com material Liquid Glass só na navegação (barra lateral e barra superior).
+- **Conteúdo:** fundo sólido, sem translucidez, para manter a leitura.
+- **Modo:** claro.
+- **Acessibilidade:** `prefers-reduced-motion` e `prefers-reduced-transparency` são respeitados (o vidro vira branco sólido).
 
-**Project:** RED Tech
-**Generated:** 2026-10-30 18:36:22
-**Category:** Status Page / Incident Management
+## Cores
+| Papel | Valor | Token |
+|---|---|---|
+| Fundo da página | `#F5F5F7` | `--bg-0` |
+| Superfície (cards) | `#FFFFFF` | `--bg-1` |
+| Destaque / ação | `#0071E3` | `--accent` |
+| Texto principal | `#1D1D1F` | `--text-1` |
+| Texto secundário | `#6E6E73` | `--text-3` (contraste ≥ 4.5:1 sobre branco) |
+| Divisória | `rgba(0,0,0,0.08)` | `--glass-border` |
+| Sucesso | `#248A3D` | `--green` |
+| Erro | `#D70015` | `--red` |
 
----
+## Tipografia
+- **Texto:** pilha do sistema (`-apple-system`, `SF Pro Text`, `Segoe UI`, `Roboto`).
+- **Números e valores:** `ui-monospace`, `SF Mono`, `Menlo`.
 
-## Global Rules
+## Forma e movimento
+- Raios: 8px (botões e campos), 12px (cards), 980px (chips e pílulas).
+- Sombras: muito leves (`--sh-sm`, `--sh-md`).
+- Transições: 0.15–0.3s, curva suave.
 
-### Color Palette
-
-| Role | Hex | CSS Variable |
-|------|-----|--------------|
-| Primary | `#16A34A` | `--color-primary` |
-| On Primary | `#000000` | `--color-on-primary` |
-| Secondary | `#22C55E` | `--color-secondary` |
-| On Secondary | `#0F172A` | `--color-on-secondary` |
-| Accent/CTA | `#DC2626` | `--color-accent` |
-| On Accent/CTA | `#FFFFFF` | `--color-on-accent` |
-| Background | `#0F172A` | `--color-background` |
-| Foreground | `#F8FAFC` | `--color-foreground` |
-| Card | `#111827` | `--color-card` |
-| Card Foreground | `#F8FAFC` | `--color-card-foreground` |
-| Muted | `#1E293B` | `--color-muted` |
-| Muted Foreground | `#CBD5E1` | `--color-muted-foreground` |
-| Border | `#334155` | `--color-border` |
-| Destructive | `#DC2626` | `--color-destructive` |
-| On Destructive | `#FFFFFF` | `--color-on-destructive` |
-| Ring | `#16A34A` | `--color-ring` |
-
-**Color Notes:** Operational green + incident red + maintenance amber
-
-### Typography
-
-- **Heading Font:** Cormorant Garamond
-- **Body Font:** Crimson Pro
-- **Mood:** academia, library, mahogany, parchment, brass, scholarly, prestige, antique, victorian, leather
-- **Google Fonts:** [Cormorant Garamond + Crimson Pro](https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,500;0,700;1,300;1,500&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400)
-
-**CSS Import:**
-```css
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,500;0,700;1,300;1,500&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap');
-```
-
-### Spacing Variables
-
-| Token | Value | Usage |
-|-------|-------|-------|
-| `--space-xs` | `4px` / `0.25rem` | Tight gaps |
-| `--space-sm` | `8px` / `0.5rem` | Icon gaps, inline spacing |
-| `--space-md` | `16px` / `1rem` | Standard padding |
-| `--space-lg` | `24px` / `1.5rem` | Section padding |
-| `--space-xl` | `32px` / `2rem` | Large gaps |
-| `--space-2xl` | `48px` / `3rem` | Section margins |
-| `--space-3xl` | `64px` / `4rem` | Hero padding |
-
-### Shadow Depths
-
-| Level | Value | Usage |
-|-------|-------|-------|
-| `--shadow-sm` | `0 1px 2px rgba(0,0,0,0.05)` | Subtle lift |
-| `--shadow-md` | `0 4px 6px rgba(0,0,0,0.1)` | Cards, buttons |
-| `--shadow-lg` | `0 10px 15px rgba(0,0,0,0.1)` | Modals, dropdowns |
-| `--shadow-xl` | `0 20px 25px rgba(0,0,0,0.15)` | Hero images, featured cards |
-
----
-
-## Component Specs
-
-### Buttons
-
-```css
-/* Primary Button */
-.btn-primary {
-  background: #DC2626;
-  color: white;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-weight: 600;
-  transition: all 200ms ease;
-  cursor: pointer;
-}
-
-.btn-primary:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
-}
-
-/* Secondary Button */
-.btn-secondary {
-  background: transparent;
-  color: #16A34A;
-  border: 2px solid #16A34A;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-weight: 600;
-  transition: all 200ms ease;
-  cursor: pointer;
-}
-```
-
-### Cards
-
-```css
-.card {
-  background: #0F172A;
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: var(--shadow-md);
-  transition: all 200ms ease;
-  cursor: pointer;
-}
-
-.card:hover {
-  box-shadow: var(--shadow-lg);
-  transform: translateY(-2px);
-}
-```
-
-### Inputs
-
-```css
-.input {
-  padding: 12px 16px;
-  border: 1px solid #E2E8F0;
-  border-radius: 8px;
-  font-size: 16px;
-  transition: border-color 200ms ease;
-}
-
-.input:focus {
-  border-color: #16A34A;
-  outline: none;
-  box-shadow: 0 0 0 3px #16A34A20;
-}
-```
-
-### Modals
-
-```css
-.modal-overlay {
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
-}
-
-.modal {
-  background: white;
-  border-radius: 16px;
-  padding: 32px;
-  box-shadow: var(--shadow-xl);
-  max-width: 500px;
-  width: 90%;
-}
-```
-
----
-
-## Style Guidelines
-
-**Style:** Dark Mode (OLED)
-
-**Keywords:** Dark theme, low light, high contrast, deep black, midnight blue, eye-friendly, OLED, night mode, power efficient
-
-**Best For:** Night-mode apps, coding platforms, entertainment, eye-strain prevention, OLED devices, low-light
-
-**Key Effects:** Minimal glow (text-shadow: 0 0 10px), dark-to-light transitions, low white emission, high readability, visible focus
-
-### Page Pattern
-
-**Pattern Name:** Real-Time / Operations Landing
-
-- **Conversion Strategy:** Offer a demo or sandbox and show trust signals. Label telemetry as live only when backed by a current source, with update time and stale state. Provide pause/hide or update-frequency controls for tickers and previews, stop offscreen/hidden work, support keyboard controls, and render a static final snapshot under reduced motion.
-- **CTA Placement:** Primary CTA in nav + After metrics
-- **Section Order:** Hero (product + live preview or status) > Key metrics/indicators > How it works > CTA (Start trial / Contact)
-
----
-
-## Anti-Patterns (Do NOT Use)
-
-- ❌ Slow dashboards
-- ❌ decorative charts
-- ❌ hidden error states
-
-### Additional Forbidden Patterns
-
-- ❌ **Emojis as icons** — Use SVG icons (Heroicons, Lucide, Simple Icons)
-- ❌ **Missing cursor:pointer** — All clickable elements must have cursor:pointer
-- ❌ **Layout-shifting hovers** — Avoid scale transforms that shift layout
-- ❌ **Low contrast text** — Maintain 4.5:1 minimum contrast ratio
-- ❌ **Instant state changes** — Always use transitions (150-300ms)
-- ❌ **Invisible focus states** — Focus states must be visible for a11y
-
----
-
-## Pre-Delivery Checklist
-
-Before delivering any UI code, verify:
-
-- [ ] No emojis used as icons (use SVG instead)
-- [ ] All icons from consistent icon set (Heroicons/Lucide)
-- [ ] `cursor-pointer` on all clickable elements
-- [ ] Hover states with smooth transitions (150-300ms)
-- [ ] Light mode: text contrast 4.5:1 minimum
-- [ ] Focus states visible for keyboard navigation
-- [ ] `prefers-reduced-motion` respected
-- [ ] Responsive: 375px, 768px, 1024px, 1440px
-- [ ] No content hidden behind fixed navbars
-- [ ] No horizontal scroll on mobile
+## Regras
+- Ícones são SVG (`icon()` em `js/helpers.js`), não emojis.
+- Emojis ficam só em mensagens (toast) e no texto do WhatsApp.
+- Vidro (`backdrop-filter`) apenas em navegação, nunca em cards ou formulários.
