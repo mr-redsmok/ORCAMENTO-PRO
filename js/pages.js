@@ -152,7 +152,7 @@ function renderJobs(el) {
             <div class="filter-bar">
                 <div class="filter-chip ${jobFilter === 'todos' ? 'active' : ''}" onclick="jobFilter='todos';renderJobs(document.getElementById('contentArea'))">Todos (${state.jobs.length})</div>
                 ${STATUS_LIST.map(s => `
-                    <div class="filter-chip ${jobFilter === s.value ? 'active' : ''}" onclick="jobFilter='${s.value}';renderJobs(document.getElementById('contentArea'))">${s.icon} ${s.label} (${statusCounts[s.value]})</div>
+                    <div class="filter-chip ${jobFilter === s.value ? 'active' : ''}" onclick="jobFilter='${s.value}';renderJobs(document.getElementById('contentArea'))"><span class="status-dot ${s.color}"></span>${s.label} (${statusCounts[s.value]})</div>
                 `).join('')}
             </div>
 
@@ -171,7 +171,7 @@ function renderJobs(el) {
                             <div class="job-card" onclick="navigateTo('jobEditor', {jobId:'${j.id}'})">
                                 <div class="job-card-header">
                                     <div class="job-card-id">${j.id}</div>
-                                    <div class="status-badge ${j.status}">${si.icon} ${si.label}</div>
+                                    <div class="status-badge ${j.status}"><span class="status-dot ${si.color}"></span>${si.label}</div>
                                 </div>
                                 <div class="job-card-client">${escHtml(j.clientName || 'Sem cliente')}</div>
                                 <div class="job-card-equip">${escHtml(j.equipment || 'Sem equipamento')}</div>
@@ -219,7 +219,7 @@ function renderJobEditor(el) {
                 </div>
                 <div style="display:flex;gap:8px;align-items:center;">
                     <select class="form-select" style="width:auto;padding:6px 32px 6px 10px;font-size:12px;" onchange="updateJobStatus('${job.id}', this.value)">
-                        ${STATUS_LIST.map(s => `<option value="${s.value}" ${job.status === s.value ? 'selected' : ''}>${s.icon} ${s.label}</option>`).join('')}
+                        ${STATUS_LIST.map(s => `<option value="${s.value}" ${job.status === s.value ? 'selected' : ''}>${s.label}</option>`).join('')}
                     </select>
                     <button class="btn-danger btn-sm" onclick="deleteJob('${job.id}')">${icon('trash')}</button>
                 </div>
@@ -425,7 +425,7 @@ function updateJobStatus(jobId, status) {
     job.updatedAt = new Date().toISOString();
     saveState();
     const si = getStatusInfo(status);
-    toast(`${si.icon} Status alterado para "${si.label}"`);
+    toast(`Status alterado para "${si.label}"`);
 }
 
 function toggleJobService(jobId, serviceId, checked) {

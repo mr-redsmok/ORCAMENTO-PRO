@@ -26,11 +26,11 @@ const DEFAULT_SERVICES = [
 ];
 
 const STATUS_LIST = [
-    { value: 'pendente',     label: 'Pendente',      icon: '🟡', color: 'yellow' },
-    { value: 'em_andamento', label: 'Em Andamento',   icon: '🔵', color: 'blue'   },
-    { value: 'aguardando',   label: 'Aguardando Peça', icon: '🟠', color: 'orange' },
-    { value: 'concluido',    label: 'Concluído',       icon: '🟢', color: 'green'  },
-    { value: 'entregue',     label: 'Entregue',        icon: '⚪', color: 'gray'   },
+    { value: 'pendente',     label: 'Pendente',      icon: '', color: 'yellow' },
+    { value: 'em_andamento', label: 'Em Andamento',   icon: '', color: 'blue'   },
+    { value: 'aguardando',   label: 'Aguardando Peça', icon: '', color: 'orange' },
+    { value: 'concluido',    label: 'Concluído',       icon: '', color: 'green'  },
+    { value: 'entregue',     label: 'Entregue',        icon: '', color: 'gray'   },
 ];
 
 let state = {

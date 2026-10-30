@@ -3,33 +3,35 @@
 Fonte da verdade visual. Os tokens reais estão em `css/design-system.css`.
 
 ## Estilo
-- **Direção:** Apple-inspired, minimalista, com material Liquid Glass só na navegação (barra lateral e barra superior).
-- **Conteúdo:** fundo sólido, sem translucidez, para manter a leitura.
-- **Modo:** claro.
-- **Acessibilidade:** `prefers-reduced-motion` e `prefers-reduced-transparency` são respeitados (o vidro vira branco sólido).
+- **Direção:** Cyberpunk UI — fundo escuro, ciano e magenta neon, estética de HUD/terminal.
+- **Scanlines:** overlay sutil de linhas de CRT sobre toda a interface (`body::after`).
+- **Cores de fundo:** gradientes radiais em ciano, magenta e roxo sobre `#07080F`.
+- **Acessibilidade:** `prefers-reduced-motion` remove as animações e o overlay de scanlines; `prefers-reduced-transparency` torna o vidro opaco.
 
 ## Cores
 | Papel | Valor | Token |
 |---|---|---|
-| Fundo da página | `#F5F5F7` | `--bg-0` |
-| Superfície (cards) | `#FFFFFF` | `--bg-1` |
-| Destaque / ação | `#0071E3` | `--accent` |
-| Texto principal | `#1D1D1F` | `--text-1` |
-| Texto secundário | `#6E6E73` | `--text-3` (contraste ≥ 4.5:1 sobre branco) |
-| Divisória | `rgba(0,0,0,0.08)` | `--glass-border` |
-| Sucesso | `#248A3D` | `--green` |
-| Erro | `#D70015` | `--red` |
+| Fundo | `#07080F` | `--bg-0` |
+| Superfície (cards) | `#11141F` | `--bg-2` |
+| Ciano neon (principal) | `#00F0FF` | `--accent` |
+| Magenta neon | `#FF2A6D` | `--accent-2` |
+| Verde neon (sucesso) | `#05FFA1` | `--green` |
+| Amarelo neon | `#FCEE0A` | `--yellow` |
+| Texto principal | `#E9F7FF` | `--text-1` |
+| Divisória | `rgba(0,240,255,0.12)` | `--hairline` |
+
+Sobre ciano e magenta, o texto é **escuro** (`#05070D`), nunca branco.
 
 ## Tipografia
-- **Texto:** pilha do sistema (`-apple-system`, `SF Pro Text`, `Segoe UI`, `Roboto`).
-- **Números e valores:** `ui-monospace`, `SF Mono`, `Menlo`.
+- **Títulos, números e rótulos:** `var(--display)` — monoespaçada, caixa alta, com tracking largo.
+- **Texto corrido:** pilha do sistema.
 
-## Forma e movimento
-- Raios: 8px (botões e campos), 12px (cards), 980px (chips e pílulas).
-- Sombras: muito leves (`--sh-sm`, `--sh-md`).
-- Transições: 0.15–0.3s, curva suave.
+## Forma
+- Raios pequenos e retos: 3px (xs), 4px (sm), 6px (md), 8px (lg).
+- Cards de estatística e painéis têm canto chanfrado via `clip-path`.
+- Brilho neon no lugar de sombra: `0 0 18px rgba(0,240,255,0.35)`.
 
 ## Regras
-- Ícones são SVG (`icon()` em `js/helpers.js`), não emojis.
-- Emojis ficam só em mensagens (toast) e no texto do WhatsApp.
-- Vidro (`backdrop-filter`) apenas em navegação, nunca em cards ou formulários.
+- Ícones são SVG (`icon()` em `js/helpers.js`), nunca emojis.
+- Status é indicado por ponto colorido (`.status-dot`), com cor e texto — nunca só cor.
+- Vidro translúcido apenas na navegação (barra lateral e barra superior).
