@@ -257,7 +257,19 @@ function renderJobEditor(el) {
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Laudo Técnico</label>
-                                <textarea class="form-textarea" id="je_technicalReport" oninput="updateJobField('${job.id}','technicalReport',this.value)">${escHtml(job.technicalReport || '')}</textarea>
+                                <div class="terminal">
+                                    <div class="terminal-bar">
+                                        <span class="terminal-dot red"></span>
+                                        <span class="terminal-dot yellow"></span>
+                                        <span class="terminal-dot green"></span>
+                                        <span class="terminal-path">~/redtech/laudo_tecnico.log</span>
+                                    </div>
+                                    <textarea class="form-textarea terminal-body" id="je_technicalReport" spellcheck="false" placeholder="$ descreva o diagnóstico..." oninput="updateJobField('${job.id}','technicalReport',this.value)">${escHtml(job.technicalReport || '')}</textarea>
+                                    <div class="terminal-status">
+                                        <span class="terminal-online">● ONLINE</span>
+                                        <span class="terminal-cursor" aria-hidden="true"></span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

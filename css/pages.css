@@ -524,3 +524,60 @@
 
 .filter-chip .status-dot { margin-right: 7px; vertical-align: middle; }
 .status-badge .status-dot { margin-right: 1px; }
+
+/* ═══════════════════════════════════════════════════════════════
+   Cyberpunk: Glitch nos títulos + borda com varredura de luz
+   ═══════════════════════════════════════════════════════════════ */
+@keyframes glitch-flicker {
+    0%, 88%, 100% { text-shadow: 0 0 16px rgba(0,240,255,0.35); }
+    90% { text-shadow: -2px 0 var(--accent-2), 2px 0 var(--accent), 0 0 16px rgba(0,240,255,0.35); }
+    93% { text-shadow: 2px 0 var(--accent-2), -2px 0 var(--accent), 0 0 16px rgba(0,240,255,0.35); }
+    95% { text-shadow: 0 0 16px rgba(0,240,255,0.35); }
+}
+
+.page-title,
+.dash-panel-title,
+.topbar-title {
+    animation: glitch-flicker 7s ease-in-out infinite;
+}
+
+.page-title:hover {
+    transform: skewX(-4deg);
+    transition: transform 0.12s steps(2);
+}
+
+/* Borda com varredura de luz nos cards */
+.stat-card::before,
+.dash-panel::before,
+.job-card::before,
+.quick-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(115deg, transparent 42%, var(--accent) 50%, transparent 58%);
+    background-size: 250% 250%;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s;
+}
+
+.stat-card:hover::before,
+.dash-panel:hover::before,
+.job-card:hover::before,
+.quick-btn:hover::before {
+    opacity: 1;
+    animation: sweep-run 1.1s ease-out;
+}
+
+@keyframes sweep-run {
+    from { background-position: 200% 50%; }
+    to { background-position: -100% 50%; }
+}
+
+.dash-panel { position: relative; }
