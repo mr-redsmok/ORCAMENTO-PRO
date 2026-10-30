@@ -28,7 +28,7 @@
 .brand-logo {
     height: 32px;
     padding: 0 10px;
-    background: linear-gradient(135deg, #ef4444, #dc2626);
+    background: var(--accent);
     border-radius: var(--r-sm);
     display: flex;
     align-items: center;
@@ -38,7 +38,7 @@
     letter-spacing: 1.5px;
     color: #fff;
     flex-shrink: 0;
-    box-shadow: 0 2px 12px rgba(239,68,68,0.3);
+    box-shadow: var(--sh-sm);
 }
 
 .brand-text {
@@ -123,7 +123,7 @@
     font-weight: 700;
     padding: 2px 7px;
     border-radius: var(--r-full);
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Fira Code', monospace;
 }
 
 .nav-item.active .nav-badge { background: var(--accent); color: #fff; }
@@ -150,7 +150,7 @@
     border: 1px solid var(--bg-5);
     border-radius: var(--r-xs);
     padding: 1px 5px;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Fira Code', monospace;
     font-size: 10px;
     color: var(--text-2);
 }
@@ -207,7 +207,7 @@
     border: 1px solid var(--bg-5);
     border-radius: var(--r-xs);
     padding: 1px 6px;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Fira Code', monospace;
     font-size: 10px;
     color: var(--text-3);
 }

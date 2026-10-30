@@ -41,7 +41,7 @@
 .btn-danger {
     background: var(--red-soft);
     color: var(--red);
-    border: 1px solid rgba(248,113,113,0.2);
+    border: 1px solid rgba(220,38,38,0.2);
     padding: 9px 18px;
     border-radius: var(--r-sm);
     font-weight: 600;
@@ -51,7 +51,7 @@
     transition: all 0.2s;
 }
 
-.btn-danger:hover { background: rgba(248,113,113,0.2); }
+.btn-danger:hover { background: rgba(220,38,38,0.2); }
 
 .btn-sm { padding: 6px 12px; font-size: 12px; }
 
@@ -195,7 +195,7 @@
     font-size: 11px;
     font-weight: 700;
     color: var(--accent);
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Fira Code', monospace;
 }
 
 .svc-qty {
@@ -206,7 +206,7 @@
     border-radius: var(--r-xs);
     color: var(--text-1);
     font-size: 12px;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Fira Code', monospace;
     text-align: center;
     outline: none;
 }
@@ -227,7 +227,7 @@
 }
 
 .custom-item-row .ci-name { flex: 1; font-size: 12px; color: var(--text-1); font-weight: 500; }
-.custom-item-row .ci-price { font-size: 12px; font-family: 'JetBrains Mono', monospace; color: var(--accent); font-weight: 700; }
+.custom-item-row .ci-price { font-size: 12px; font-family: 'Fira Code', monospace; color: var(--accent); font-weight: 700; }
 .custom-item-row .ci-qty { font-size: 11px; color: var(--text-3); }
 
 .ci-delete {
@@ -280,7 +280,7 @@
 .receipt-meta {
     font-size: 10px;
     color: var(--text-4);
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Fira Code', monospace;
     margin-top: 4px;
 }
 
@@ -320,7 +320,7 @@
 }
 
 .receipt-table td:first-child { color: var(--text-1); }
-.receipt-table td:last-child { text-align: right; font-family: 'JetBrains Mono', monospace; font-weight: 600; color: var(--accent); }
+.receipt-table td:last-child { text-align: right; font-family: 'Fira Code', monospace; font-weight: 600; color: var(--accent); }
 
 .receipt-empty {
     text-align: center;
@@ -335,7 +335,7 @@
     align-items: center;
     padding: 12px 14px;
     background: var(--accent-soft);
-    border: 1px solid rgba(99,102,241,0.2);
+    border: 1px solid rgba(37,99,235,0.2);
     border-radius: var(--r-md);
 }
 
@@ -350,7 +350,7 @@
 .receipt-total-value {
     font-size: 20px;
     font-weight: 800;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Fira Code', monospace;
     color: var(--text-1);
 }
 
@@ -359,7 +359,7 @@
     margin-top: 14px;
     padding: 12px;
     background: var(--green-soft);
-    border: 1px dashed rgba(52,211,153,0.3);
+    border: 1px dashed rgba(21,128,61,0.3);
     border-radius: var(--r-md);
     text-align: center;
     animation: fadeIn 0.3s ease-out;
@@ -379,7 +379,7 @@
 .receipt-pix-key {
     font-size: 13px;
     font-weight: 700;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Fira Code', monospace;
     color: var(--green);
     cursor: pointer;
     word-break: break-all;
@@ -396,7 +396,7 @@
 .btn-whatsapp {
     flex: 1;
     padding: 10px;
-    background: linear-gradient(135deg, #25d366, #128c7e);
+    background: #128C7E;
     color: #fff;
     border: none;
     border-radius: var(--r-sm);
@@ -411,7 +411,7 @@
     transition: all 0.2s;
 }
 
-.btn-whatsapp:hover { filter: brightness(1.1); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(37,211,102,0.3); }
+.btn-whatsapp:hover { filter: brightness(1.1); transform: translateY(-1px); box-shadow: var(--sh-md); }
 
 .btn-print {
     padding: 10px 14px;

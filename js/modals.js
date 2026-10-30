@@ -37,15 +37,15 @@ function closeModal() {
 // ═══════════════════════════════════════════════════════════════
 
 const PALETTE_COMMANDS = [
-    { icon: '📊', label: 'Ir para Dashboard',    action: () => navigateTo('dashboard'), group: 'Navegação' },
-    { icon: '🔧', label: 'Ir para Serviços',     action: () => navigateTo('jobs'), group: 'Navegação' },
-    { icon: '👥', label: 'Ir para Clientes',     action: () => navigateTo('clients'), group: 'Navegação' },
-    { icon: '💰', label: 'Ir para Financeiro',   action: () => navigateTo('finance'), group: 'Navegação' },
-    { icon: '⚙️', label: 'Ir para Configurações', action: () => navigateTo('settings'), group: 'Navegação' },
-    { icon: '➕', label: 'Nova OS',              action: () => createNewJob(), group: 'Ações' },
-    { icon: '💾', label: 'Exportar dados',        action: () => exportAllData(), group: 'Ações' },
-    { icon: '📂', label: 'Importar dados',        action: () => document.getElementById('importFileInput').click(), group: 'Ações' },
-    { icon: '🖨️', label: 'Imprimir página',      action: () => window.print(), group: 'Ações' },
+    { icon: icon('layout-dashboard'), label: 'Ir para Dashboard',    action: () => navigateTo('dashboard'), group: 'Navegação' },
+    { icon: icon('wrench'), label: 'Ir para Serviços',     action: () => navigateTo('jobs'), group: 'Navegação' },
+    { icon: icon('users'), label: 'Ir para Clientes',     action: () => navigateTo('clients'), group: 'Navegação' },
+    { icon: icon('wallet'), label: 'Ir para Financeiro',   action: () => navigateTo('finance'), group: 'Navegação' },
+    { icon: icon('settings'), label: 'Ir para Configurações', action: () => navigateTo('settings'), group: 'Navegação' },
+    { icon: icon('plus'), label: 'Nova OS',              action: () => createNewJob(), group: 'Ações' },
+    { icon: icon('save'), label: 'Exportar dados',        action: () => exportAllData(), group: 'Ações' },
+    { icon: icon('folder-open'), label: 'Importar dados',        action: () => document.getElementById('importFileInput').click(), group: 'Ações' },
+    { icon: icon('printer'), label: 'Imprimir página',      action: () => window.print(), group: 'Ações' },
 ];
 
 let paletteSelectedIndex = 0;
@@ -70,7 +70,7 @@ function filterPalette(query) {
     // Always show recent jobs and clients when palette is open
     state.jobs.slice(-8).reverse().forEach(j => {
         commands.push({
-            icon: '🔧',
+            icon: icon('wrench'),
             label: `${j.id} — ${j.clientName || 'Sem cliente'} (${j.equipment || ''})`,
             hint: formatCurrency(getJobTotal(j)),
             action: () => navigateTo('jobEditor', { jobId: j.id }),
@@ -85,7 +85,7 @@ function filterPalette(query) {
                 (j.equipment || '').toLowerCase().includes(q) ||
                 j.id.toLowerCase().includes(q)) {
                 commands.push({
-                    icon: '🔧',
+                    icon: icon('wrench'),
                     label: `${j.id} — ${j.clientName || 'Sem cliente'} (${j.equipment || ''})`,
                     hint: formatCurrency(getJobTotal(j)),
                     action: () => navigateTo('jobEditor', { jobId: j.id }),
@@ -98,7 +98,7 @@ function filterPalette(query) {
             if (c.name.toLowerCase().includes(q) ||
                 (c.phone || '').toLowerCase().includes(q)) {
                 commands.push({
-                    icon: '👤',
+                    icon: icon('user'),
                     label: c.name,
                     hint: c.phone || '',
                     action: () => navigateTo('clients'),
@@ -171,7 +171,7 @@ function highlightPaletteItem() {
 
 function openAddClientModal() {
     openModal(`
-        <div class="modal-title">👤 Novo Cliente</div>
+        <div class="modal-title">${icon('user-plus')} Novo Cliente</div>
         <div class="form-group">
             <label class="form-label">Nome <span class="req">*</span></label>
             <input class="form-input" id="modal_clientName" placeholder="Nome completo">
@@ -188,7 +188,7 @@ function openAddClientModal() {
         </div>
         <div class="modal-actions">
             <button class="btn-secondary" onclick="closeModal()">Cancelar</button>
-            <button class="btn-primary" onclick="saveNewClient()">💾 Salvar</button>
+            <button class="btn-primary" onclick="saveNewClient()">${icon('save')} Salvar</button>
         </div>
     `);
     setTimeout(() => document.getElementById('modal_clientName')?.focus(), 100);

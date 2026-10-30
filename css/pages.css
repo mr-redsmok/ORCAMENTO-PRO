@@ -53,7 +53,7 @@
     font-size: 26px;
     font-weight: 800;
     letter-spacing: -1px;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Fira Code', monospace;
     animation: countUp 0.5s ease-out;
 }
 
@@ -141,10 +141,10 @@
     flex-shrink: 0;
 }
 
-.job-status-dot.pendente { background: var(--yellow); box-shadow: 0 0 8px rgba(251,191,36,0.4); }
-.job-status-dot.em_andamento { background: var(--blue); box-shadow: 0 0 8px rgba(96,165,250,0.4); }
-.job-status-dot.aguardando { background: var(--orange); box-shadow: 0 0 8px rgba(251,146,60,0.4); }
-.job-status-dot.concluido { background: var(--green); box-shadow: 0 0 8px rgba(52,211,153,0.4); }
+.job-status-dot.pendente { background: var(--yellow); box-shadow: 0 0 0 3px rgba(180,83,9,0.15); }
+.job-status-dot.em_andamento { background: var(--blue); box-shadow: 0 0 0 3px rgba(29,78,216,0.15); }
+.job-status-dot.aguardando { background: var(--orange); box-shadow: 0 0 0 3px rgba(194,65,12,0.15); }
+.job-status-dot.concluido { background: var(--green); box-shadow: 0 0 0 3px rgba(21,128,61,0.15); }
 .job-status-dot.entregue { background: var(--text-3); }
 
 .job-info { flex: 1; min-width: 0; }
@@ -169,7 +169,7 @@
 .job-amount {
     font-size: 13px;
     font-weight: 700;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Fira Code', monospace;
     color: var(--accent);
     white-space: nowrap;
 }
@@ -293,7 +293,7 @@
     font-size: 10px;
     font-weight: 700;
     color: var(--text-3);
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Fira Code', monospace;
     letter-spacing: 0.5px;
 }
 
@@ -355,7 +355,7 @@
 .job-card-total {
     font-size: 16px;
     font-weight: 800;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Fira Code', monospace;
     color: var(--accent);
 }
 
@@ -399,7 +399,7 @@
     transition: background 0.1s;
 }
 
-.clients-table tr:hover td { background: rgba(99,102,241,0.03); }
+.clients-table tr:hover td { background: rgba(37,99,235,0.04); }
 
 .clients-table td:first-child { font-weight: 600; color: var(--text-1); }
 
@@ -414,7 +414,7 @@
     border-radius: var(--r-full);
     font-size: 10px;
     font-weight: 700;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Fira Code', monospace;
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -438,7 +438,7 @@
 .finance-card-value {
     font-size: 28px;
     font-weight: 800;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Fira Code', monospace;
     letter-spacing: -1px;
 }
 
@@ -467,7 +467,7 @@
 .chart-bar {
     flex: 1;
     border-radius: var(--r-xs) var(--r-xs) 0 0;
-    background: linear-gradient(180deg, var(--accent) 0%, rgba(99,102,241,0.3) 100%);
+    background: linear-gradient(180deg, var(--accent) 0%, rgba(37,99,235,0.3) 100%);
     min-height: 4px;
     transition: height 0.5s cubic-bezier(0.4,0,0.2,1);
     position: relative;
@@ -492,7 +492,7 @@
     transform: translateX(-50%);
     font-size: 9px;
     font-weight: 700;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Fira Code', monospace;
     color: var(--text-2);
     white-space: nowrap;
 }

@@ -122,4 +122,5 @@ document.addEventListener('keydown', function(e) {
 // ═══════════════════════════════════════════════════════════════
 
 loadState();
+document.querySelectorAll('[data-icon]').forEach(el => { el.innerHTML = icon(el.dataset.icon); });
 navigateTo('dashboard');

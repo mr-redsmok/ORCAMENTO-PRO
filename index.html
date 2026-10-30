@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RED Tech — Gestão de Assistência Técnica</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500;600;700&family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/design-system.css">
 <link rel="stylesheet" href="css/layout.css">
 <link rel="stylesheet" href="css/pages.css">
@@ -32,29 +32,29 @@
     <nav class="sidebar-nav">
         <div class="nav-section">Principal</div>
         <div class="nav-item active" data-page="dashboard" onclick="navigateTo('dashboard')">
-            <span class="nav-icon">📊</span>
+            <span class="nav-icon" data-icon="layout-dashboard"></span>
             <span>Dashboard</span>
         </div>
         <div class="nav-item" data-page="jobs" onclick="navigateTo('jobs')">
-            <span class="nav-icon">🔧</span>
+            <span class="nav-icon" data-icon="wrench"></span>
             <span>Serviços</span>
             <span class="nav-badge" id="navJobCount">0</span>
         </div>
         <div class="nav-item" data-page="clients" onclick="navigateTo('clients')">
-            <span class="nav-icon">👥</span>
+            <span class="nav-icon" data-icon="users"></span>
             <span>Clientes</span>
             <span class="nav-badge" id="navClientCount">0</span>
         </div>
 
         <div class="nav-section">Financeiro</div>
         <div class="nav-item" data-page="finance" onclick="navigateTo('finance')">
-            <span class="nav-icon">💰</span>
+            <span class="nav-icon" data-icon="wallet"></span>
             <span>Financeiro</span>
         </div>
 
         <div class="nav-section">Sistema</div>
         <div class="nav-item" data-page="settings" onclick="navigateTo('settings')">
-            <span class="nav-icon">⚙️</span>
+            <span class="nav-icon" data-icon="settings"></span>
             <span>Configurações</span>
         </div>
     </nav>
@@ -80,14 +80,14 @@
         <div class="topbar-title" id="topbarTitle">Dashboard</div>
 
         <div class="topbar-search" onclick="openPalette()">
-            <span class="topbar-search-icon">🔍</span>
+            <span class="topbar-search-icon" data-icon="search"></span>
             <span class="topbar-search-text">Buscar...</span>
             <span class="topbar-search-kbd">⌘K</span>
         </div>
 
         <div class="topbar-actions">
-            <button class="btn-topbar" onclick="exportAllData()" title="Exportar dados">💾</button>
-            <button class="btn-topbar" onclick="document.getElementById('importFileInput').click()" title="Importar dados">📂</button>
+            <button class="btn-topbar" onclick="exportAllData()" title="Exportar dados" data-icon="save"></button>
+            <button class="btn-topbar" onclick="document.getElementById('importFileInput').click()" title="Importar dados" data-icon="folder-open"></button>
         </div>
     </header>
 
@@ -103,7 +103,7 @@
 <div class="palette-overlay" id="paletteOverlay" onclick="if(event.target===this)closePalette()">
     <div class="palette">
         <div class="palette-input-wrap">
-            <span class="palette-input-icon">🔍</span>
+            <span class="palette-input-icon" data-icon="search"></span>
             <input class="palette-input" id="paletteInput" placeholder="Comando ou busca..." oninput="filterPalette(this.value)">
         </div>
         <div class="palette-results" id="paletteResults"></div>
